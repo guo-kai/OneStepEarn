@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  storage:
+    image: ccr.ccs.tencentyun.com/dockerhub-repository/0g-storage-node
+    pull_policy: always
+    restart: always
+    ports:
+      - "5678:5678"
+      - "5679:5679"
+    volumes:
+      - ./storage-config:/root/config
+    command: zgs_node --config /root/config/config.toml
+
+  kv:
+    image: ccr.ccs.tencentyun.com/dockerhub-repository/0g-storage-kv
+    pull_policy: always
+    restart: always
+    ports:
+      - "6789:6789"
+    volumes:
+      - ./kv-config:/root/config
+    command: zgs_kv --config /root/config/config.toml
+    depends_on:
+      - storage
+

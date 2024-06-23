@@ -1,0 +1,14 @@
+services:
+  node:
+    image: ccr.ccs.tencentyun.com/dockerhub-repository/0g-chain-node:v0.2.3
+    pull_policy: always
+    restart: always
+    command: ["0gchaind","start"]
+    volumes:
+      - ./.0gchain:/root/.0gchain
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: 2048m
+
